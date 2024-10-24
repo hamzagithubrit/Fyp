@@ -4,7 +4,7 @@ const User = require("../models/User");
 const router = express.Router();
 
 // Get messages for a specific room
-router.get("/messages/:roomId", async (req, res) => {
+router.get("/messages/:roomId", async (req, res) => {  // request for message
     try {
         const messages = await Message.find({ roomId: req.params.roomId })
             .populate("sender", "username") // Populate sender field to get the username
