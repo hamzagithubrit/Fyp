@@ -12,7 +12,7 @@ router.get("/messages/:roomId", async (req, res) => {
         res.json(messages);
     } catch (error) {
         console.error("Error fetching messages:", error);
-        res.status(500).json({ error: "Failed to fetch messages" });
+        res.status(500).json({ error: "Failed to fetch messages" }); //aoun
     }
 });
 

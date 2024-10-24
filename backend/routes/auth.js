@@ -201,6 +201,7 @@ router.get('/users/:id', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch user.' });
     }
 });
+//new etr lt
 
 // Update user details (excluding avatar)
 router.put('/users/:id', async (req, res) => {
