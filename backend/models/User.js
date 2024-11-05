@@ -16,9 +16,9 @@ const UserSchema = new mongoose.Schema({
         required: true,
     },
     avatar: {
-        type: String, // URL for user avatar image
-        default: 'https://images.pexels.com/photos/11619096/pexels-photo-11619096.jpeg?auto=compress&cs=tinysrgb&w=600', // Set a default avatar URL
-    },
+        public_id: { type: String },
+        url: { type: String }
+      },
     messages: [
         {
             type: mongoose.Schema.Types.ObjectId,

@@ -7,8 +7,50 @@ const authRoutes = require("./routes/auth");
 const chatRoutes = require("./routes/chat");
 const roomRoutes = require("./routes/roomRoutes"); // Import the room routes
 const Message = require("./models/Message"); // Import the Message model
+const {key,secret,cloudnery} = require("../backend/cloud")
+const cloudnary=require("cloudinary").v2;
+const multer=require('multer');
+const {CloudinaryStorage}=require("multer-storage-cloudinary");
+const router = express.Router()
+
 
 require("dotenv").config();
+
+cloudnary.config({
+    cloud_name: cloudnery,
+    api_key: key,
+    api_secret: secret,
+  });
+
+  const storage = new CloudinaryStorage({
+    cloudinary: cloudnary,
+    params: {
+      folder: "uploads",
+      allowed_formats: ["jpg", "png", "pdf", "doc", "docx", "xls", "xlsx"], // Add more formats as needed
+    },
+  });
+  
+  const upload = multer({ storage: storage });
+  
+  // File upload route
+  router.post("/upload", upload.single("file"), (req, res) => {
+    if (!req.file) {
+      return res.status(400).send("No file uploaded.");
+    }
+  
+    const fileInfo = {
+      filename: req.file.filename,
+      originalName: req.file.originalname,
+      mimetype: req.file.mimetype,
+      size: req.file.bytes,
+      url: req.file.path, // Cloudinary URL
+    };
+  
+    res.status(200).json({
+      message: "File uploaded successfully to Cloudinary",
+      file: fileInfo,
+    });
+  });
 
 const app = express();
 const server = http.createServer(app);
